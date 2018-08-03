@@ -3,7 +3,8 @@ function prompt_ghq_pwd
 end
 
 function fish_prompt
-  echo -sn (prompt_ghq_pwd)
+  set -l dir (prompt_ghq_pwd)
+  set -l git
 
   if set -l branch_name (git_branch_name)
     set -l branch_status
@@ -14,7 +15,9 @@ function fish_prompt
       set branch_status "+"
     end
 
-    echo -s (set_color -o) " ($branch_name$branch_status) " (set_color normal)
-    echo '$ '
+    set git (set_color -o)"($branch_name$branch_status)"(set_color normal)
   end
+
+  echo "$dir $git"
+  echo '$ '
 end
