@@ -14,6 +14,7 @@ function fish_prompt
       set branch_status "+"
     end
 
-    echo -sn (set_color -o) " ($branch_name$branch_status) " (set_color normal)
+    echo -s (set_color -o) " ($branch_name$branch_status) " (set_color normal)
+    echo '$ '
   end
 end
