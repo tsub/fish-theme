@@ -6,6 +6,11 @@ My fish theme
 
 ![fish-theme]
 
+## Requirements
+
+* [Nerd Font](https://github.com/ryanoasis/nerd-fonts)
+* [Ladicle/git-prompt](https://github.com/Ladicle/git-prompt)
+
 ## Install
 
 With [fisherman]
