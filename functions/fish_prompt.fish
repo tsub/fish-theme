@@ -1,5 +1,9 @@
+function prompt_ghq_pwd
+  echo (pwd | sed "s:^$GHQ_ROOT/::" | sed "s:^$HOME:~:")
+end
+
 function fish_prompt
-  echo -sn (prompt_pwd)
+  echo -sn (prompt_ghq_pwd)
 
   if set -l branch_name (git_branch_name)
     set -l branch_status
