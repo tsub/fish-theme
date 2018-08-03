@@ -8,22 +8,42 @@ function prompt_ghq_pwd
   )
 end
 
+# Require Ladicle/git-prompt
 function prompt_git_status
-  set -l git_status
+  set -l git_status (string split " " (git-prompt))
 
-  if set -l branch_name (git_branch_name)
-    set -l branch_status
-
-    if git_is_dirty
-      set branch_status "*"
-    else
-      set branch_status "+"
-    end
-
-    set git_status (set_color -o)"($branch_name$branch_status)"(set_color normal)
+  if [ (count $git_status) -eq 0 ]
+    return
   end
 
-  echo "$git_status"
+  set -l icon
+  switch $git_status[1]
+  case 0 # Conflict
+    set icon (set_color yellow)""(set_color normal)
+  case 1 # Behind
+    set icon (set_color red)""(set_color normal)
+  case 2 # Ahead or No remote
+    set icon (set_color blue)""(set_color normal)
+  case 3 # Changed
+    set icon (set_color blue)""(set_color normal)
+  case 4 # No changed
+    set icon (set_color green)""(set_color normal)
+  end
+
+  set -l branch
+  if [ $git_status[2] = "master" ]
+    set branch (set_color -u white)"$git_status[2]"(set_color normal)
+  else
+    set branch "$git_status[2]"
+  end
+
+  # Un-commit change number, Un-staged change number, Un-tracked change number
+  set -l numbers
+  if [ (count $git_status) -eq 3 ]
+    set numbers (set_color yellow)"|  "(set_color white)"$git_status[3]"(set_color normal)
+  end
+
+  echo "$icon $branch $numbers"
 end
 
 function fish_prompt
