@@ -1,5 +1,11 @@
 function prompt_ghq_pwd
-  echo (pwd | sed "s:^$GHQ_ROOT/::" | sed "s:^$HOME:~:")
+  echo (
+    pwd \
+    | sed "s:^$GHQ_ROOT/github.com/: :" \
+    | sed "s:^$GHQ_ROOT/gitlab.com/: :" \
+    | sed "s:^$GHQ_ROOT/: :" \
+    | sed "s:^$HOME: ~:"
+  )
 end
 
 function fish_prompt
