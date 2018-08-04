@@ -10,6 +10,10 @@ end
 
 # Require Ladicle/git-prompt
 function prompt_git_status
+  if not type -q git-prompt
+    return
+  end
+
   set -l git_status (string split " " (git-prompt))
 
   if [ (count $git_status) -eq 0 ]
