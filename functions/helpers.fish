@@ -47,7 +47,11 @@ function prompt_git_status
     set numbers (set_color yellow)"|  "(set_color white)"$git_status[3]"(set_color normal)
   end
 
-  echo "$icon $branch $numbers"
+  if [ -z "$numbers" ]
+    echo "$icon $branch"
+  else
+    echo "$icon $branch $numbers"
+  end
 end
 
 function prompt_aws_profile
