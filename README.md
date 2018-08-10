@@ -22,4 +22,4 @@ fisher tsub/fish-theme
 [slack-link]: https://fisherman-wharf.herokuapp.com
 [slack-badge]: https://fisherman-wharf.herokuapp.com/badge.svg
 [fisherman]: https://github.com/fisherman/fisherman
-[fish-theme]: https://gyazo.com/703b61a1035dca43805c1ffdb506a0ac.png
+[fish-theme]: https://gyazo.com/538111efab4678a10270ae4e8beaa21f.png
