@@ -10,6 +10,7 @@ My fish theme
 
 * [Nerd Font](https://github.com/ryanoasis/nerd-fonts)
 * [Ladicle/git-prompt](https://github.com/Ladicle/git-prompt)
+* [kubectl](https://kubernetes.io/docs/reference/kubectl/overview/)
 
 ## Install
 
@@ -22,4 +23,4 @@ fisher tsub/fish-theme
 [slack-link]: https://fisherman-wharf.herokuapp.com
 [slack-badge]: https://fisherman-wharf.herokuapp.com/badge.svg
 [fisherman]: https://github.com/fisherman/fisherman
-[fish-theme]: https://gyazo.com/538111efab4678a10270ae4e8beaa21f.png
+[fish-theme]: https://gyazo.com/cf708c3aa776ce9257c6cd3e12910883.png
