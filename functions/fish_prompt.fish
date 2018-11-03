@@ -62,18 +62,32 @@ function prompt_aws_profile
   echo (set_color yellow)" $AWS_PROFILE"(set_color normal)
 end
 
+# Require kubectl
+function prompt_kubectl_context
+  if not type -q kubectl
+    return
+  end
+
+  set -l ctx (kubectl config current-context 2>/dev/null)
+  if [ -z "$ctx" ]
+    return
+  end
+
+  echo (set_color cyan)"⎈ $ctx"(set_color normal)
+end
+
 function fish_prompt
   set -l dir (prompt_ghq_pwd)
   set -l git (prompt_git_status)
   set -l aws (prompt_aws_profile)
+  set -l kubectx (prompt_kubectl_context)
+
+  set -l prompt "$dir"
+  [ -n "$aws" ]; and set -l prompt "$prompt $aws"
+  [ -n "$kubectx" ]; and set -l prompt "$prompt $kubectx"
+  set -l prompt "$prompt $git"
 
   echo
-
-  if [ -z "$aws" ]
-    echo "$dir $git"
-  else
-    echo "$dir $aws $git"
-  end
-
+  echo $prompt
   echo '$ '
 end
