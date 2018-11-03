@@ -63,7 +63,7 @@ function prompt_aws_profile
 end
 
 # Require kubectl
-function prompt_kubectl_context
+function prompt_kubectl_status
   if not type -q kubectl
     return
   end
@@ -73,18 +73,21 @@ function prompt_kubectl_context
     return
   end
 
-  echo (set_color cyan)"⎈ $ctx"(set_color normal)
+  set -l ns (kubectl config view -o "jsonpath={.contexts[?(@.name==\"$context\")].context.namespace}")
+  [ -z "$ns" ]; and set -l ns "default"
+
+  echo (set_color cyan)"⎈ $ctx/$ns"(set_color normal)
 end
 
 function fish_prompt
   set -l dir (prompt_ghq_pwd)
   set -l git (prompt_git_status)
   set -l aws (prompt_aws_profile)
-  set -l kubectx (prompt_kubectl_context)
+  set -l kubectl_status (prompt_kubectl_status)
 
   set -l prompt "$dir"
   [ -n "$aws" ]; and set -l prompt "$prompt $aws"
-  [ -n "$kubectx" ]; and set -l prompt "$prompt $kubectx"
+  [ -n "$kubectl_status" ]; and set -l prompt "$prompt $kubectl_status"
   set -l prompt "$prompt $git"
 
   echo
