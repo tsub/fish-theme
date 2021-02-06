@@ -1,7 +1,5 @@
 # fish-theme
 
-[![Slack Room][slack-badge]][slack-link]
-
 My fish theme
 
 ![fish-theme]
@@ -14,13 +12,13 @@ My fish theme
 
 ## Install
 
-With [fisherman]
+With [fisher]
 
 ```
-fisher tsub/fish-theme
+fisher install tsub/fish-theme
 ```
 
 [slack-link]: https://fisherman-wharf.herokuapp.com
 [slack-badge]: https://fisherman-wharf.herokuapp.com/badge.svg
-[fisherman]: https://github.com/fisherman/fisherman
+[fisher]: https://github.com/jorgebucaran/fisher
 [fish-theme]: https://gyazo.com/cf708c3aa776ce9257c6cd3e12910883.png
