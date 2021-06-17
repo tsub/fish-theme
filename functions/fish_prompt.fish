@@ -72,11 +72,13 @@ function prompt_kubectl_status
   if [ -z "$ctx" ]
     return
   end
+  # for Amazon EKS
+  set -l short_ctx (echo "$ctx" | sed "s/arn\:aws\:eks\:.*\:.*\:cluster\///")
 
   set -l ns (kubectl config view -o "jsonpath={.contexts[?(@.name==\"$ctx\")].context.namespace}")
   [ -z "$ns" ]; and set -l ns "default"
 
-  echo (set_color cyan)"⎈ $ctx/$ns"(set_color normal)
+  echo (set_color cyan)"⎈ $short_ctx/$ns"(set_color normal)
 end
 
 function fish_prompt
