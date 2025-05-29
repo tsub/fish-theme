@@ -90,7 +90,6 @@ function fish_prompt
   set -l git (prompt_git_status)
   set -l aws (prompt_aws_profile)
   set -l kubectl_status (prompt_kubectl_status)
-  set -l dev_container (prompt_dev_container)
 
   # Decide the order of prompt
   set -l prompt "$dir"
