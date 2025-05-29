@@ -75,7 +75,8 @@ function prompt_kubectl_status
   # for Amazon EKS
   set -l short_ctx (echo "$ctx" | sed "s/arn\:aws\:eks\:.*\:.*\:cluster\///")
 
-  set -l ns (kubectl config view -o "jsonpath={.contexts[?(@.name==\"$ctx\")].context.namespace}")
+  set -l kubectl_cmd (command -v kubectl) # ignore fish alias
+  set -l ns ("$kubectl_cmd" config view -o "jsonpath={.contexts[?(@.name==\"$ctx\")].context.namespace}")
   [ -z "$ns" ]; and set -l ns "default"
 
   echo (set_color cyan)"⎈ $short_ctx/$ns"(set_color normal)
