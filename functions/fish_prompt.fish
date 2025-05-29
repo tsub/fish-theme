@@ -87,7 +87,7 @@ function prompt_dev_container
     return
   end
 
-  echo (set_color yellow)" Dev Container"(set_color normal)
+  echo (set_color yellow)" Dev Container "(set_color normal)
 end
 
 function fish_prompt
@@ -99,7 +99,7 @@ function fish_prompt
   set -l dev_container (prompt_dev_container)
 
   # Decide the order of prompt
-  set -l prompt "$dev_container $dir"
+  set -l prompt "$dev_container$dir"
   [ -n "$aws" ]; and set -l prompt "$prompt $aws"
   [ -n "$kubectl_status" ]; and set -l prompt "$prompt $kubectl_status"
   set -l prompt "$prompt $git"
