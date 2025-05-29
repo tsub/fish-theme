@@ -68,14 +68,15 @@ function prompt_kubectl_status
     return
   end
 
-  set -l ctx (kubectl config current-context 2>/dev/null)
+  set -l kubectl_cmd (command -v kubectl) # ignore fish alias
+
+  set -l ctx ("$kubectl_cmd" config current-context 2>/dev/null)
   if [ -z "$ctx" ]
     return
   end
   # for Amazon EKS
   set -l short_ctx (echo "$ctx" | sed "s/arn\:aws\:eks\:.*\:.*\:cluster\///")
 
-  set -l kubectl_cmd (command -v kubectl) # ignore fish alias
   set -l ns ("$kubectl_cmd" config view -o "jsonpath={.contexts[?(@.name==\"$ctx\")].context.namespace}")
   [ -z "$ns" ]; and set -l ns "default"
 
