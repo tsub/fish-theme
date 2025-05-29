@@ -5,7 +5,7 @@ function prompt_ghq_pwd
     | sed "s:^$GHQ_ROOT/gitlab.com/: :" \
     | sed "s:^$GHQ_ROOT/: :" \
     | sed "s:^$HOME: ~:" \
-    | sed "s:^/workspaces/: Dev Container :"
+    | sed "s:^/workspaces/: Dev Container  :"
   )
 end
 
