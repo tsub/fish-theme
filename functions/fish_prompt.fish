@@ -4,8 +4,7 @@ function prompt_ghq_pwd
     | sed "s:^$GHQ_ROOT/github.com/: :" \
     | sed "s:^$GHQ_ROOT/gitlab.com/: :" \
     | sed "s:^$GHQ_ROOT/: :" \
-    | sed "s:^$HOME: ~:" \
-    | sed "s:^/workspaces/: Dev Container |  :"
+    | sed "s:^$HOME: ~:"
   )
 end
 
@@ -84,15 +83,24 @@ function prompt_kubectl_status
   echo (set_color cyan)"⎈ $short_ctx/$ns"(set_color normal)
 end
 
+function prompt_dev_container
+  if [ -z "$REMOTE_CONTAINERS" ] # $REMOTE_CONTAINERS is set by devcontainer CLI (my custom feature)
+    return
+  end
+
+  echo (set_color yellow)" Dev Container | "(set_color normal)
+end
+
 function fish_prompt
   # Prepare prompt components
   set -l dir (prompt_ghq_pwd)
   set -l git (prompt_git_status)
   set -l aws (prompt_aws_profile)
   set -l kubectl_status (prompt_kubectl_status)
+  set -l dev_container (prompt_dev_container)
 
   # Decide the order of prompt
-  set -l prompt "$dir"
+  set -l prompt "$dev_container$dir"
   [ -n "$aws" ]; and set -l prompt "$prompt $aws"
   [ -n "$kubectl_status" ]; and set -l prompt "$prompt $kubectl_status"
   set -l prompt "$prompt $git"
