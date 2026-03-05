@@ -59,7 +59,12 @@ function prompt_aws_profile
     return
   end
 
-  echo (set_color yellow)" $AWS_PROFILE"(set_color normal)
+  set -l sso_role_name (aws configure get sso_role_name 2>/dev/null)
+  if [ -n "$sso_role_name" ]
+    echo (set_color yellow)" $AWS_PROFILE/$sso_role_name"(set_color normal)
+  else
+    echo (set_color yellow)" $AWS_PROFILE"(set_color normal)
+  end
 end
 
 # Require kubectl
