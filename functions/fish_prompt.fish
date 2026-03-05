@@ -59,8 +59,22 @@ function prompt_aws_profile
     return
   end
 
-  set -l aws_cmd (command -v aws)
-  set -l sso_role_name ("$aws_cmd" configure get sso_role_name 2>/dev/null)
+  if [ -n "$AWS_CONFIG_FILE" ]
+    set -l config_file "$AWS_CONFIG_FILE"
+  else
+    set -l config_file "$HOME/.aws/config"
+  end
+
+  set -l sso_role_name (awk -v profile="[profile $AWS_PROFILE]" '
+    $0 == profile {found=1; next}
+    found && /^\[/ {found=0}
+    found && /^sso_role_name/ {
+      split($0, a, "=")
+      gsub(/^ +| +$/, "", a[2])
+      print a[2]
+      exit
+    }
+  ' "$config_file" 2>/dev/null)
   if [ -n "$sso_role_name" ]
     echo (set_color yellow)" $AWS_PROFILE/$sso_role_name"(set_color normal)
   else
