@@ -54,18 +54,14 @@ function prompt_git_status
   end
 end
 
-function prompt_aws_profile
-  if [ -z "$AWS_PROFILE" ]
-    return
-  end
-
+function prompt_aws_sso_role_name
   if [ -n "$AWS_CONFIG_FILE" ]
     set -l config_file "$AWS_CONFIG_FILE"
   else
     set -l config_file "$HOME/.aws/config"
   end
 
-  set -l sso_role_name (awk -v profile="[profile $AWS_PROFILE]" '
+  awk -v profile="[profile $AWS_PROFILE]" '
     $0 == profile {found=1; next}
     found && /^\[/ {found=0}
     found && /^sso_role_name/ {
@@ -74,7 +70,15 @@ function prompt_aws_profile
       print a[2]
       exit
     }
-  ' "$config_file" 2>/dev/null)
+  ' "$config_file" 2>/dev/null
+end
+
+function prompt_aws_profile
+  if [ -z "$AWS_PROFILE" ]
+    return
+  end
+
+  set -l sso_role_name (prompt_aws_sso_role_name)
   if [ -n "$sso_role_name" ]
     echo (set_color yellow)" $AWS_PROFILE/$sso_role_name"(set_color normal)
   else
