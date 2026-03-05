@@ -55,10 +55,9 @@ function prompt_git_status
 end
 
 function prompt_aws_sso_role_name
+  set -l config_file "$HOME/.aws/config"
   if [ -n "$AWS_CONFIG_FILE" ]
-    set -l config_file "$AWS_CONFIG_FILE"
-  else
-    set -l config_file "$HOME/.aws/config"
+    set config_file "$AWS_CONFIG_FILE"
   end
 
   awk -v profile="[profile $AWS_PROFILE]" '
